@@ -13,24 +13,25 @@ class SearchScreen extends Component {
     state = {
         searchQuery: "",
         queriedBooks: [],
-        error:false
+        error: false
     };
 
     updateQuery = (query) => {
-        if (query ===  '' || query === undefined) {
+        if (query === '' || query === undefined) {
             this.setState({
                 searchQuery: '',
                 queriedBooks: [],
-                error:true
+                error: true
             })
- 
+
         }
-        else {
-            this.setState({
-                searchQuery:query,
-             })
- 
+        else  {
             this.fetchSearchResults(query)
+
+            this.setState({
+                searchQuery: query,  
+            })
+
 
         }
     }
@@ -38,19 +39,21 @@ class SearchScreen extends Component {
     fetchSearchResults = (query) => {
         console.log(query)
 
-            BookApi.search(query.trim())
-                .then(result => {
-                    console.log(result)
-                    if (result === undefined || (result.error && result.error === 'empty query')) {
-                         return this.setState({
-                              queriedBooks: [] , error:true})
-                    }
-                    else {
+        BookApi.search(query.trim())
+            .then(result => {
+                console.log(result)
+                if (result === undefined || (result.error && result.error === 'empty query')) {
+                    return this.setState({
+                         
+                        queriedBooks: [], error: true
+                    })
+                }
+                else {
+                     if(this.state.searchQuery===query)
+                    this.setState({     queriedBooks: this.updateShelf(result), error: false })
+                }
+            })
 
-                        this.setState({ queriedBooks: this.updateShelf(result)  , error:false })
-                    }
-                })
-         
 
     }
 
@@ -86,16 +89,17 @@ class SearchScreen extends Component {
                 </div>
 
                 <div className="search-books-results">
-                    
-                {this.state.error && (
-               <div className = 'error'>
-                <h4 aria-posinset='center'>warnning: Please type valid search</h4>
-            </div>
-        )}{!this.state.error && (
-            <div className = 'error'>
-             <h4 aria-posinset='center'>{this.state.queriedBooks.length} result match</h4>
-         </div>
-     )}
+
+                    {this.state.error && (
+                        <div className='error'>
+                            <h4 aria-posinset='center'>warnning: Please type valid search</h4>
+                        </div>
+                    )}
+                    {!this.state.error && (
+                        <div className='error'>
+                            <h4 aria-posinset='center'>{this.state.queriedBooks.length} result match</h4>
+                        </div>
+                    )}
                 </div>
                 <div className="bookshelf-books">
 
@@ -107,7 +111,7 @@ class SearchScreen extends Component {
                         ))}
                     </ol>
                 </div>
-              
+
             </div>
         )
     }

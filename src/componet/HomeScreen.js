@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import HomeItem from './HomeItem'
 import PropTypes from 'prop-types'
 import { Shelfs } from "../Constant/Constans";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import BookShelf from './BookShelf';
 
 
 
@@ -18,68 +19,24 @@ class HomeScreen extends Component {
 
 
     render() {
+        const { shelf, books, onBookShelfChange } = this.props
+
         return (
 
             <div className="list-books">
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
-                {/* ------------------------------Currently Reading----------------------------- */}
-                <div className="bookshelf">
-                    <h2 className="bookshelf-title">Currently Reading</h2>
-                    <div className="bookshelf-books">
-                        <ol className="books-grid">
-                            {this.props.books.filter(book => {
-                                 return book.shelf == "currentlyReading"
-                            }).map((book, i) => (
-                                <li key={i}  >
-                                    <HomeItem book={book} onBookShelfChange={this.props.onBookShelfChange}></HomeItem>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-                </div>
 
 
+                {/* ------------------------------Draw Shelf books----------------------------- */}
+
+                {shelf.map((sheleMaped, index) => (
+                    <BookShelf key={index} shelf={sheleMaped} books={books} onBookShelfChange={onBookShelfChange} />
+
+                ))}
 
 
-                {/* ------------------------------Want to Read----------------------------- */}
-                <div className="bookshelf">
-                    <h2 className="bookshelf-title">Want to Read</h2>
-                    <div className="bookshelf-books">
-                        <ol className="books-grid">
-                            {this.props.books.filter(book => {
-                                console.log(book.shelf)
-                                return book.shelf == "wantToRead"
-                            }).map((book, i) => (
-                                <li key={i}  >
-                                    <HomeItem book={book} onBookShelfChange={this.props.onBookShelfChange}></HomeItem>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-                </div>
-
-
-
-
-
-                {/* ------------------------------Read----------------------------- */}
-                <div className="bookshelf">
-                    <h2 className="bookshelf-title">Read</h2>
-                    <div className="bookshelf-books">
-                        <ol className="books-grid">
-                            {this.props.books.filter(book => {
-                                console.log(book.shelf)
-                                return book.shelf == "read"
-                            }).map((book, i) => (
-                                <li key={i}  >
-                                    <HomeItem book={book} onBookShelfChange={this.props.onBookShelfChange} ></HomeItem>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-                </div>
 
                 {/* ------------------------------Add Book Button ----------------------------- */}
 

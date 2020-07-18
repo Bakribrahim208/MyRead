@@ -6,11 +6,28 @@ import HomeScreen from './componet/HomeScreen'
 import SearchScreen from './componet/SearchScreen'
 import { Route } from "react-router-dom";
 
+
+
+const SHELVES = [
+  {
+    title: 'Currently Reading',
+    id: 'currentlyReading'
+  },
+  {
+    title: 'Want To Read',
+    id: 'wantToRead'
+  },
+  {
+    title: 'Read',
+    id: 'read'
+  }
+];
+
 class BooksApp extends React.Component {
   state = {
      books: []
   }
-
+  
   onBookShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       // this.fetchMyBooks()
@@ -44,7 +61,7 @@ class BooksApp extends React.Component {
     return (
       <div>
         <Route exact path='/' render={() => (
-          <HomeScreen books={this.state.books} onBookShelfChange={this.onBookShelfChange} ></HomeScreen>
+          <HomeScreen shelf={SHELVES} books={this.state.books} onBookShelfChange={this.onBookShelfChange} ></HomeScreen>
         )} />
         <Route path='/search'
 
