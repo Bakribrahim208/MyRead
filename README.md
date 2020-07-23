@@ -13,10 +13,7 @@ MyReads is a simple cataloging app that allows you to place books in one of thre
 * install project with `npm install`
 * run with 'npm start`
 
-## Usage
-
-The project can be 
-
+ 
  
 
 ## Screenshots
